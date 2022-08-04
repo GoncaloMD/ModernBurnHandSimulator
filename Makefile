@@ -1,7 +1,7 @@
 build:
-	g++ -c card-enum.cpp
+	g++ -c card.cpp
 	g++ -c main.cpp
-	g++ -o main.exe main.o card-enum.o
+	g++ -o main.exe main.o card.o
 
 run:
 	./main.exe
