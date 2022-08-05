@@ -11,7 +11,7 @@
 using namespace std;
 
 int numberOfReps = 100000;
-bool onPlay = false;
+bool onPlay = true;
 
 void print(std::vector<int> const &v)
 {
@@ -104,8 +104,6 @@ int main(){
     int numberOfKeeps = 0;
     int numberOfMulls = 0;
 
-    int numberOfOneDrops = 0;
-
     for(int rep=0; rep<numberOfReps; rep++){
         //get a time-based seed
         unsigned seed = std::chrono::system_clock::now()
@@ -117,48 +115,74 @@ int main(){
 
         //calculate keeps
         int numberOfLands = 0;
+        int numberOfOneDrops = 0;
+        int numberOfCanopies = 0;
+
+        //calculate number of lands in opener
         for(int i=0; i<7; i++){
             if(deck[i].getType() == LAND) numberOfLands++;
         }
 
+        //keep 2 and 3 landers that have turn 1 play
         if(numberOfLands == 2 || numberOfLands == 3){
             for(int i=0; i<7; i++){
-                if(deck[i].isTurnOnePlay()){
-                    numberOfKeeps++;
-                    break;
+                if (deck[i].isTurnOnePlay()) {
+                    numberOfOneDrops++;
                 }
             }
-        } else if(!onPlay && numberOfLands == 1){
+
+            if (numberOfOneDrops > 0) {
+                numberOfKeeps++;
+            }
+            else {
+                numberOfMulls++;
+            }
+        } 
+        
+        //keep 1 landers if on the draw + have at least two turn 1 plays
+        else if(!onPlay && numberOfLands == 1){
             for(int i=0; i<7; i++){
-                if(deck[i].isTurnOnePlay()) numberOfOneDrops++;
+                if (deck[i].isTurnOnePlay()) {
+                    numberOfOneDrops++;
+                }
             }
 
-            if(numberOfOneDrops >= 2) numberOfKeeps ++;
-            numberOfOneDrops = 0;
-        } else if(numberOfLands == 4){
-            for(int i=0; i<7; i++){
-                if(deck[i].getName() == SUNBAKED_CANYON || deck[i].getName() == FIERY_ISLET) numberOfKeeps++;
+            if (numberOfOneDrops > 1) {
+                numberOfKeeps++;
             }
-        } else{
+            else {
+                numberOfMulls++;
+            }
+        } 
+        
+        //keep 4 landers if they have at least 1 canopy land
+        else if(numberOfLands == 4){
+            for(int i=0; i<7; i++){
+                if (deck[i].getName() == SUNBAKED_CANYON || deck[i].getName() == FIERY_ISLET) {
+                    numberOfCanopies++;
+                }
+            }
+
+            if (numberOfCanopies > 0) {
+                numberOfKeeps++;
+            }
+            else {
+                numberOfMulls++;
+            }
+            numberOfCanopies = 0;
+        } 
+        
+        //mull everythhing else
+        else{
             numberOfMulls++;
         }
 
-        //calculate flooding
+        //calculate flooding TODO
 
-        //print(deck);
-
-        /*cout << "opening hand is: ";
-        cout << cardTranslator[deck[0]] << ", ";
-        cout << cardTranslator[deck[1]] << ", ";
-        cout << cardTranslator[deck[2]] << ", ";
-        cout << cardTranslator[deck[3]] << ", ";
-        cout << cardTranslator[deck[4]] << ", ";
-        cout << cardTranslator[deck[5]] << ", ";
-        cout << cardTranslator[deck[6]] << ", ";
-        cout << endl;*/
     }
 
     cout << "Number of repetitions: " << numberOfReps << endl;
     cout << "Number of keeps: " << numberOfKeeps << " (" << (float) numberOfKeeps / (float) numberOfReps * 100 << "%)" << endl;
     cout << "Number of mulls: " << numberOfMulls << " (" << (float) numberOfMulls / (float) numberOfReps * 100 << "%)" << endl;
+    cout << numberOfKeeps + numberOfMulls << endl;
 }
