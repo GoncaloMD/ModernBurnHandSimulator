@@ -6,7 +6,9 @@
 #include <chrono>
 #include <string>
 
-#include "card.cpp"
+#include "Card.h"
+#include "Type.h"
+#include "ManaCost.h"
 
 using namespace std;
 
@@ -23,6 +25,14 @@ void print(std::vector<int> const &v)
 
 int main(){
 
+    Card goblinGuide = Card(
+        "Goblin Guide"
+        , Type::Creature
+        , 1
+        , ManaCost(0,0,1,0,0,0)
+    );
+
+    /*
     //Card names - to be moved to separate file
     string LIGHTNING_BOLT = "Lightning Bolt";
     string LAVA_SPIKE = "Lava Spike";
@@ -185,4 +195,5 @@ int main(){
     cout << "Number of keeps: " << numberOfKeeps << " (" << (float) numberOfKeeps / (float) numberOfReps * 100 << "%)" << endl;
     cout << "Number of mulls: " << numberOfMulls << " (" << (float) numberOfMulls / (float) numberOfReps * 100 << "%)" << endl;
     cout << numberOfKeeps + numberOfMulls << endl;
+    */
 }

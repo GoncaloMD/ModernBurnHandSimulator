@@ -1,34 +1,24 @@
-#include <string>
+#include "Card.h"
 
 using namespace std;
 
-class Card{
-    private:
-        string name;
-        string type;
-        int mv;
+Card::Card(){}
 
-    public:
-        Card(string nameInput, string typeInput, int mvInput){
-            name = nameInput;
-            type = typeInput;
-            mv = mvInput;
-        }
+Card::Card(string name, Type type, int manaValue, ManaCost manaCost){
+	this->name = name;
+	this->type = type;
+	this->manaValue = manaValue;
+	this->manaCost = manaCost;
+}
 
-        string getName(){
-            return name;
-        }
+string Card::getName(){
+	return this->name;
+}
 
-        string getType(){
-            return type;
-        }
+Type Card::getType() {
+	return this->type;
+}
 
-        int getMv(){
-            return mv;
-        }
-
-        bool isTurnOnePlay(){
-            if(mv == 1 && name != "Skewer the Critics") return true;
-            return false;
-        }
-};
+int Card::getManaValue() {
+	return this->manaValue;
+}

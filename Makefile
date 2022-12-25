@@ -1,7 +1,9 @@
 build:
-	g++ -c card.cpp
+	g++ -c Type.cpp
+	g++ -c ManaCost.cpp
+	g++ -c Card.cpp
 	g++ -c main.cpp
-	g++ -o main.exe main.o card.o
+	g++ -o main.exe main.o Card.o Type.o ManaCost.o
 
 run:
 	./main.exe
