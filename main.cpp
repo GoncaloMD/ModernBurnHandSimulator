@@ -15,7 +15,7 @@
 
 using namespace std;
 
-int numberOfReps = 100;
+int numberOfReps = 100000;
 bool onPlay = true;
 
 int main(){
@@ -104,6 +104,10 @@ int main(){
         CardName::SUNBAKED_CANYON
     );
 
+    Card fieryIslet = Card::Land(
+        CardName::FIERY_ISLET
+    );
+
     Card sacredFoundry = Card::Land(
         CardName::SACRED_FOUNDRY
     );
@@ -130,11 +134,19 @@ int main(){
     stockBoros.addCards(searingBlaze, 4);
     stockBoros.addCards(lightningHelix, 4);
 
-    stockBoros.print();
+    stockBoros.addCards(mountain, 2);
+    stockBoros.addCards(inspiringVantage, 4);
+    stockBoros.addCards(sunbakedCanyon, 4);
+    stockBoros.addCards(fieryIslet, 2);
+    stockBoros.addCards(sacredFoundry, 2);
+    stockBoros.addCards(aridMesa, 2);
+    stockBoros.addCards(scaldingTarn, 3);
 
     //Percentage of keeps simulator
     int numberOfKeeps = 0;
     int numberOfMulls = 0;
+
+
 
     for (int rep = 0; rep < numberOfReps; rep++) {
         Deck library = stockBoros.getShuffledCopy();
@@ -148,25 +160,53 @@ int main(){
 
         //calculate keeps
         int numberOfLands = 0;
-        int numberOfOneDrops = 0;
-        int numberOfCanopies = 0;
 
         //calculate number of lands in opener
         for (int i = 0; i < hand.size(); i++) {
-            if (hand[i].getType() == Type::LAND) numberOfLands++;
+            if (hand[i].getType() == Type::LAND) {
+                numberOfLands++;
+            }
         }
 
-        //keep 2 and 3 landers that have turn 1 play
-        if (numberOfLands == 2 || numberOfLands == 3) {
-            if (containsTurnOnePlay(hand)) {
-                numberOfKeeps++;
-            }
-            else {
+        switch (numberOfLands) {
+            case 0:
                 numberOfMulls++;
-            }
-        }
-        else {
-            numberOfMulls++;
+                break;
+
+            case 1:
+                if (!onPlay && numberOfTurnOnePlays(hand) >= 2) {
+                    numberOfKeeps++;
+                }
+                else {
+                    numberOfMulls++;
+                }
+                break;
+
+            case 2:
+                if (numberOfTurnOnePlays(hand) >= 1) {
+                    numberOfKeeps++;
+                }
+                else {
+                    numberOfMulls++;
+                }
+                break;
+
+            case 3:
+                if (numberOfTurnOnePlays(hand) >= 1) {
+                    numberOfKeeps++;
+                }
+                else {
+                    numberOfMulls++;
+                }
+                break;
+
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            default:
+                numberOfMulls++;
+                break;
         }
     }
 
@@ -176,22 +216,7 @@ int main(){
     cout << numberOfKeeps + numberOfMulls << endl;
 
     /*
-        
-        //keep 1 landers if on the draw + have at least two turn 1 plays
-        else if(!onPlay && numberOfLands == 1){
-            for(int i=0; i<7; i++){
-                if (deck[i].isTurnOnePlay()) {
-                    numberOfOneDrops++;
-                }
-            }
 
-            if (numberOfOneDrops > 1) {
-                numberOfKeeps++;
-            }
-            else {
-                numberOfMulls++;
-            }
-        } 
         
         //keep 4 landers if they have at least 1 canopy land
         else if(numberOfLands == 4){
@@ -224,4 +249,6 @@ int main(){
     cout << "Number of mulls: " << numberOfMulls << " (" << (float) numberOfMulls / (float) numberOfReps * 100 << "%)" << endl;
     cout << numberOfKeeps + numberOfMulls << endl;
     */
+
+    return 0;
 }

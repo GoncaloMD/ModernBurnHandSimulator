@@ -3,7 +3,12 @@
 
 bool isTurnOnePlay(Card card) {
 	if (card.getManaValue() == 1 || card.getName() == CardName::RIFT_BOLT) {
-		return true;
+		if (card.getName() == CardName::SHARD_VOLLEY) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 	return false;
 }
@@ -15,4 +20,14 @@ bool containsTurnOnePlay(vector<Card> hand) {
 		}
 	}
 	return false;
+}
+
+int numberOfTurnOnePlays(vector<Card> hand) {
+	int numberOfTurnOnePlays = 0;
+	for (int i = 0; i < hand.size(); i++) {
+		if (isTurnOnePlay(hand[i])) {
+			numberOfTurnOnePlays++;
+		}
+	}
+	return numberOfTurnOnePlays;
 }

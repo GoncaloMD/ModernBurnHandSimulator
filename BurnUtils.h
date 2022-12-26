@@ -7,5 +7,6 @@
 
 bool isTurnOnePlay(Card card);
 bool containsTurnOnePlay(vector<Card> hand);
+int numberOfTurnOnePlays(vector<Card> hand);
 
 #endif
