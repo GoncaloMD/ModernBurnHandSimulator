@@ -2,8 +2,10 @@
 #define TYPE_H
 
 enum Type{
-    Creature
-    , Land
+    CREATURE
+    , INSTANT
+    , SORCERY
+    , LAND
 };
 
 #endif

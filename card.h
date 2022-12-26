@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "CardName.h"
 #include "Type.h"
 #include "ManaCost.h"
 
@@ -11,17 +12,21 @@ using namespace std;
 class Card{
 
     private:
-        string name;
+        CardName name;
         Type type;
         int manaValue;
         ManaCost manaCost;
 
     public:
         Card();
-        Card(string name, Type type, int manaValue, ManaCost manaCost);
+        Card(CardName name, Type type, int manaValue, ManaCost manaCost);
+
+        static Card Land(CardName name);
+
+        void print();
 
         //Getters
-        string getName();
+        CardName getName();
         Type getType();
         int getManaValue();
 

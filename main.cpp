@@ -7,121 +7,144 @@
 #include <string>
 
 #include "Card.h"
+#include "CardName.h"
 #include "Type.h"
 #include "ManaCost.h"
+#include "Deck.h"
+#include "BurnUtils.h"
 
 using namespace std;
 
-int numberOfReps = 100000;
+int numberOfReps = 100;
 bool onPlay = true;
-
-void print(std::vector<int> const &v)
-{
-    for (int i: v) {
-        std::cout << i << ' ';
-    }
-    cout << endl;
-}
 
 int main(){
 
+    //Defining cards in the deck
+    //TODO define this in an external class
     Card goblinGuide = Card(
-        "Goblin Guide"
-        , Type::Creature
+        CardName::GOBLIN_GUIDE
+        , Type::CREATURE
         , 1
-        , ManaCost(0,0,1,0,0,0)
+        , ManaCost(0, 0, 0, 1, 0, 0)
     );
 
-    /*
-    //Card names - to be moved to separate file
-    string LIGHTNING_BOLT = "Lightning Bolt";
-    string LAVA_SPIKE = "Lava Spike";
-    string RIFT_BOLT = "Rift Bolt";
-    string SKEWER_THE_CRITICS = "Skewer the Critics";
+    Card monasterySwiftspear = Card(
+        CardName::MONASTERY_SWIFTSPEAR
+        , Type::CREATURE
+        , 1
+        , ManaCost(0, 0, 0, 1, 0, 0)
+    );
 
-    string GOBLIN_GUIDE = "Goblin Guide";
-    string MONASTERY_SWIFTSPEAR = "Monastery Swiftspear";
-    string EIDOLON_OF_THE_GREAT_REVEL = "Eidolon of the Great Revel";
-    string REINFORECED_RONIN = "Reinforce Ronin";
+    Card lightningBolt = Card(
+        CardName::LIGHTNING_BOLT
+        , Type::INSTANT
+        , 1
+        , ManaCost(0, 0, 0, 1, 0, 0)
+    );
 
-    string BOROS_CHARM = "Boros Charm";
+    Card lavaSpike = Card(
+        CardName::LAVA_SPIKE
+        , Type::SORCERY
+        , 1
+        , ManaCost(0, 0, 0, 1, 0, 0)
+    );
 
-    string SEARING_BLAZE = "Searing Blaze";
-    string LIGHTNING_HELIX = "Lightning Helix";
-    string SKULLCRACK = "Skullcrack";
+    Card riftBolt = Card(
+        CardName::RIFT_BOLT
+        , Type::SORCERY
+        , 3
+        , ManaCost(0, 0, 0, 1, 0, 2)
+    );
 
-    string MOUNTAIN = "Mountain";
-    string SACRED_FOUNDRY = "Sacred Foundry";
-    string INSPIRING_VANTAGE = "Inspiring Vantage";
-    string SUNBAKED_CANYON = "Sunbaked Canyon";
-    string FIERY_ISLET = "Fiery Islet";
-    string FETCHLAND = "Arid Mesa";
+    Card skewerTheCritics = Card(
+        CardName::SKEWER_THE_CRITICS
+        , Type::SORCERY
+        , 3
+        , ManaCost(0, 0, 0, 1, 0, 2)
+    );
 
-    //Card types - to be moved to separate file
-    string CREATURE = "Creature";
-    string LAND = "Land";
-    string INSTANT = "Instant";
-    string SORCERY = "Sorcery";
+    Card borosCharm = Card(
+        CardName::BOROS_CHARM
+        , Type::INSTANT
+        , 2
+        , ManaCost(1, 0, 0, 1, 0, 0)
+    );
 
-    //Creating cards - these could also be in separate file
-    Card lightningBolt = Card(LIGHTNING_BOLT, INSTANT, 1);
-    Card lavaSpike = Card(LAVA_SPIKE, SORCERY, 1);
-    Card riftBolt = Card(RIFT_BOLT, SORCERY, 1);
-    Card skewerTheCritics = Card(SKEWER_THE_CRITICS, SORCERY, 1);
+    Card searingBlaze = Card(
+        CardName::SEARING_BLAZE
+        , Type::INSTANT
+        , 2
+        , ManaCost(0, 0, 0, 2, 0, 0)
+    );
 
-    Card goblinGuide = Card(GOBLIN_GUIDE, CREATURE, 1);
-    Card monasterySwiftspear = Card(MONASTERY_SWIFTSPEAR, CREATURE, 1);
+    Card skullcrack = Card(
+        CardName::SKULLCRACK
+        , Type::INSTANT
+        , 2
+        , ManaCost(0, 0, 0, 1, 0, 1)
+    );
 
-    Card borosCharm = Card(BOROS_CHARM, INSTANT, 2);
+    Card lightningHelix = Card(
+        CardName::LIGHTNING_HELIX
+        , Type::INSTANT
+        , 2
+        , ManaCost(1, 0, 0, 1, 0, 0)
+    );
 
-    Card searingBlaze = Card(SEARING_BLAZE, INSTANT, 2);
-    Card skullcrack = Card(SKULLCRACK, INSTANT, 2);
-    Card lightningHelix = Card(LIGHTNING_HELIX, INSTANT, 2);
+    Card mountain = Card::Land(
+        CardName::MOUNTAIN
+    );
 
-    Card mountain = Card(MOUNTAIN, LAND, 0);
-    Card sacredFoundry = Card(SACRED_FOUNDRY, LAND, 0);
-    Card inspiringVantage = Card(INSPIRING_VANTAGE, LAND, 0);
-    Card sunbakedCanyon = Card(SUNBAKED_CANYON, LAND, 0);
-    Card fieryIslet = Card(FIERY_ISLET, LAND, 0);
-    Card fetch = Card(FETCHLAND, LAND, 0);
+    Card inspiringVantage = Card::Land(
+        CardName::INSPIRING_VANTAGE
+    );
 
-    //Building deck
-    vector<Card> deck;
+    Card sunbakedCanyon = Card::Land(
+        CardName::SUNBAKED_CANYON
+    );
 
-    for(int i=0; i<4; i++){
-        deck.push_back(lightningBolt);
-        deck.push_back(lavaSpike);
-        deck.push_back(riftBolt);
-        deck.push_back(skewerTheCritics);
-        
-        deck.push_back(goblinGuide);
-        deck.push_back(monasterySwiftspear);
-        
-        deck.push_back(borosCharm);
+    Card sacredFoundry = Card::Land(
+        CardName::SACRED_FOUNDRY
+    );
 
-        deck.push_back(searingBlaze);
-        deck.push_back(skullcrack);
-        deck.push_back(lightningHelix);
+    Card aridMesa = Card::Land(
+        CardName::ARID_MESA
+    );
 
-        deck.push_back(inspiringVantage);
-        deck.push_back(sunbakedCanyon);
-    }
+    Card scaldingTarn = Card::Land(
+        CardName::SCALDING_TARN
+    );
 
-    deck.insert(deck.end(), 3, mountain);
-    deck.insert(deck.end(), 2, sacredFoundry);
-    deck.insert(deck.end(), 7, fetch);
+    //Deck builder
+    //TODO do this somewhere else
+    Deck stockBoros = Deck();
+    stockBoros.addCards(goblinGuide, 4);
+    stockBoros.addCards(monasterySwiftspear, 4);
+    stockBoros.addCards(lightningBolt, 4);
+    stockBoros.addCards(lavaSpike, 4);
+    stockBoros.addCards(riftBolt, 4);
+    stockBoros.addCards(skewerTheCritics, 4);
+    stockBoros.addCards(borosCharm, 4);
+    stockBoros.addCards(skullcrack, 4);
+    stockBoros.addCards(searingBlaze, 4);
+    stockBoros.addCards(lightningHelix, 4);
 
+    stockBoros.print();
+
+    //Percentage of keeps simulator
     int numberOfKeeps = 0;
     int numberOfMulls = 0;
 
-    for(int rep=0; rep<numberOfReps; rep++){
-        //get a time-based seed
-        unsigned seed = std::chrono::system_clock::now()
-                            .time_since_epoch()
-                            .count();
+    for (int rep = 0; rep < numberOfReps; rep++) {
+        Deck library = stockBoros.getShuffledCopy();
+        vector<Card> hand;
 
-        //shuffle deck
-        shuffle (deck.begin(), deck.end(), std::default_random_engine(seed));
+        for (int i = 0; i < 7; i++) {
+            hand.push_back(library.draw());
+            //hand[i].print();
+            //std::cout << endl;
+        }
 
         //calculate keeps
         int numberOfLands = 0;
@@ -129,25 +152,30 @@ int main(){
         int numberOfCanopies = 0;
 
         //calculate number of lands in opener
-        for(int i=0; i<7; i++){
-            if(deck[i].getType() == LAND) numberOfLands++;
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand[i].getType() == Type::LAND) numberOfLands++;
         }
 
         //keep 2 and 3 landers that have turn 1 play
-        if(numberOfLands == 2 || numberOfLands == 3){
-            for(int i=0; i<7; i++){
-                if (deck[i].isTurnOnePlay()) {
-                    numberOfOneDrops++;
-                }
-            }
-
-            if (numberOfOneDrops > 0) {
+        if (numberOfLands == 2 || numberOfLands == 3) {
+            if (containsTurnOnePlay(hand)) {
                 numberOfKeeps++;
             }
             else {
                 numberOfMulls++;
             }
-        } 
+        }
+        else {
+            numberOfMulls++;
+        }
+    }
+
+    cout << "Number of repetitions: " << numberOfReps << endl;
+    cout << "Number of keeps: " << numberOfKeeps << " (" << (float)numberOfKeeps / (float)numberOfReps * 100 << "%)" << endl;
+    cout << "Number of mulls: " << numberOfMulls << " (" << (float)numberOfMulls / (float)numberOfReps * 100 << "%)" << endl;
+    cout << numberOfKeeps + numberOfMulls << endl;
+
+    /*
         
         //keep 1 landers if on the draw + have at least two turn 1 plays
         else if(!onPlay && numberOfLands == 1){
