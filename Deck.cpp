@@ -4,6 +4,7 @@
 #include <chrono>
 
 #include "Deck.h"
+#include "CardName.h"
 
 void Deck::addCard(Card card) {
 	deck.push_back(card);
@@ -40,7 +41,10 @@ Card Deck::draw() {
 }
 
 void Deck::print() {
-	cout << "Not implemented yet" << endl;
+	for (int i = 0; i < deck.size(); i++) {
+		cout << toStringFromCardName(deck[i].getName()) << endl;
+	}
+	cout << endl;
 }
 
 vector<Card> Deck::getDeck() {

@@ -32,6 +32,7 @@ enum CardName {
 	//Red
 	, SKULLCRACK
 	, SEARING_BLAZE
+	, PLAY_WITH_FIRE
 
 	//White
 	, LIGHTNING_HELIX
@@ -44,8 +45,12 @@ enum CardName {
 	, SACRED_FOUNDRY
 	, ARID_MESA
 	, SCALDING_TARN
+
+	//default
+	, UNKNOWN_CARD
 };
 
-std::string getCardNameAsString(CardName name);
+std::string toStringFromCardName(CardName name);
+CardName toCardNameFromString(std::string name);
 
 #endif

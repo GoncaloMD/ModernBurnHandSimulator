@@ -22,8 +22,18 @@ Card Card::Land(CardName name) {
 	);
 }
 
+bool Card::operator==(const Card& card) {
+	//We only need to compare the names of cards
+	if (name == card.name) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
 void Card::print() {
-	cout << getCardNameAsString(name) << " ";
+	cout << toStringFromCardName(name) << " ";
 }
 
 
