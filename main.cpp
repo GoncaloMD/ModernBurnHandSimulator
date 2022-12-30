@@ -12,7 +12,7 @@
 #include "ManaCost.h"
 #include "Deck.h"
 #include "BurnUtils.h"
-#include "KeepPercentageResult.h"
+#include "SimulationResult.h"
 #include "BurnCards.h"
 
 using namespace std;
@@ -67,19 +67,14 @@ int main(){
     myBoros.addCards(aridMesa, 4);
 
     //Percentage of keeps simulator
-    cout << "Stock decklist:" << endl;
-    myBoros.print();
 
-    vector<KeepPercentageResult> stockBorosKeepPercentageResult = getKeepPercentageDistributionPlayDraw(stockBoros, numberOfReps);
+    vector<SimulationResult> stockBorosKeepPercentageResult = simulatePlayDraw(stockBoros, numberOfReps);
     cout << "Play:" << endl;
     stockBorosKeepPercentageResult[0].print();
     cout << "Draw:" << endl;
     stockBorosKeepPercentageResult[1].print();
 
-    cout << "Decklist:" << endl;
-    myBoros.print();
-
-    vector<KeepPercentageResult> myBorosKeepPercentageResult = getKeepPercentageDistributionPlayDraw(myBoros, numberOfReps);
+    vector<SimulationResult> myBorosKeepPercentageResult = simulatePlayDraw(myBoros, numberOfReps);
     cout << "Play:" << endl;
     myBorosKeepPercentageResult[0].print();
     cout << "Draw:" << endl;

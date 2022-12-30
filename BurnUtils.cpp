@@ -16,7 +16,8 @@ bool isTurnOnePlay(Card card) {
 	}
 	return false;
 }
-         
+
+//TODO: maybe these vector<card> methods should be somewhere else. statics in card?
 bool containsTurnOnePlay(vector<Card> hand) {
 	for (int i = 0; i < hand.size(); i++) {
 		if (isTurnOnePlay(hand[i])) {
@@ -43,9 +44,9 @@ bool containsCard(std::vector<Card> list, Card card) {
     return false;
 }
 
-KeepPercentageResult getKeepPercentageDistribution(Deck deck, int numberOfReps, bool isOnPlay) {
+SimulationResult simulate(Deck deck, int numberOfReps, bool isOnPlay) {
 
-    int numberOfMulls = 0;
+    vector<int> numberOfMulls{ 0, 0, 0, 0, 0, 0, 0, 0 };
     vector<int> numberOfKeeps{ 0, 0, 0, 0, 0, 0, 0, 0 };
 
     for (int rep = 0; rep < numberOfReps; rep++) {
@@ -68,7 +69,7 @@ KeepPercentageResult getKeepPercentageDistribution(Deck deck, int numberOfReps, 
 
         switch (numberOfLands) {
         case 0:
-            numberOfMulls++;
+            numberOfMulls[0]++;
             break;
 
         case 1:
@@ -81,7 +82,7 @@ KeepPercentageResult getKeepPercentageDistribution(Deck deck, int numberOfReps, 
                 numberOfKeeps[1]++;
             }
             else {
-                numberOfMulls++;
+                numberOfMulls[1]++;
             }
             break;
 
@@ -91,7 +92,7 @@ KeepPercentageResult getKeepPercentageDistribution(Deck deck, int numberOfReps, 
                 numberOfKeeps[2]++;
             }
             else {
-                numberOfMulls++;
+                numberOfMulls[2]++;
             }
             break;
 
@@ -101,28 +102,39 @@ KeepPercentageResult getKeepPercentageDistribution(Deck deck, int numberOfReps, 
                 numberOfKeeps[3]++;
             }
             else {
-                numberOfMulls++;
+                numberOfMulls[3]++;
             }
             break;
 
         case 4:
+            numberOfMulls[4]++;
+            break;
+
         case 5:
+            numberOfMulls[5]++;
+            break;
+
         case 6:
+            numberOfMulls[6]++;
+            break;
+
         case 7:
+            numberOfMulls[7]++;
+            break;
+
         default:
-            numberOfMulls++;
             break;
         }
     }
 	
-    return KeepPercentageResult(numberOfMulls, numberOfKeeps);
+    return SimulationResult(numberOfMulls, numberOfKeeps);
 }
 
-std::vector<KeepPercentageResult> getKeepPercentageDistributionPlayDraw(Deck deck, int numberOfReps) {
-    std::vector<KeepPercentageResult> results;
+std::vector<SimulationResult> simulatePlayDraw(Deck deck, int numberOfReps) {
+    std::vector<SimulationResult> results;
 
-    results.push_back(getKeepPercentageDistribution(deck, numberOfReps, true));
-    results.push_back(getKeepPercentageDistribution(deck, numberOfReps, false));
+    results.push_back(simulate(deck, numberOfReps, true));
+    results.push_back(simulate(deck, numberOfReps, false));
 
     return results;
 }

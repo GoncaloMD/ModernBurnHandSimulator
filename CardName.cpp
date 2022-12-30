@@ -89,7 +89,66 @@ CardName toCardNameFromString(std::string name) {
 	}
 	else if (name == "Lightning Bolt") {
 		return LIGHTNING_BOLT;
-
+	}
+	else if (name == "Lava Spike") {
+		return LAVA_SPIKE;
+	}
+	else if (name == "Rift Bolt") {
+		return RIFT_BOLT;
+	}
+	else if (name == "Skewer the Critics") {
+		return SKEWER_THE_CRITICS;
+	}
+	else if (name == "Boros Charm") {
+		return BOROS_CHARM;
+	}
+	else if (name == "Bump in the Night") {
+		return BUMP_IN_THE_NIGHT;
+	}
+	else if (name == "Eidolon of the Great Revel") {
+		return EIDOLON_OF_THE_GREAT_REVEL;
+	}
+	else if (name == "Dragon's Rage Channeler") {
+		return DRAGONS_RAGE_CHANNELER;
+	}
+	else if (name == "Reinforced Ronin") {
+		return REINFORCED_RONIN;
+	}
+	else if (name == "Shard Volley") {
+		return SHARD_VOLLEY;
+	}
+	else if (name == "Skullcrack") {
+		return SKULLCRACK;
+	}
+	else if (name == "Searing Blaze") {
+		return SEARING_BLAZE;
+	}
+	else if (name == "Play with Fire") {
+		return PLAY_WITH_FIRE;
+	}
+	else if (name == "Lightning Helix") {
+		return LIGHTNING_HELIX;
+	}
+	else if (name == "Mountain") {
+		return MOUNTAIN;
+	}
+	else if (name == "Inspiring Vantage") {
+		return INSPIRING_VANTAGE;
+	}
+	else if (name == "Sunbaked Canyon") {
+		return SUNBAKED_CANYON;
+	}
+	else if (name == "Fiery Islet") {
+		return FIERY_ISLET;
+	}
+	else if (name == "Sacred Foundry") {
+		return SACRED_FOUNDRY;
+	}
+	else if (name == "Arid Mesa") {
+		return ARID_MESA;
+	}
+	else if (name == "Scalding Tarn") {
+		return SCALDING_TARN;
 	}
 	else {
 		return UNKNOWN_CARD;

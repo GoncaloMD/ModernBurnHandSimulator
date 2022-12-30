@@ -5,7 +5,7 @@
 
 #include "Card.h"
 #include "Deck.h"
-#include "KeepPercentageResult.h"
+#include "SimulationResult.h"
 
 //Card utils
 bool isTurnOnePlay(Card card);
@@ -14,7 +14,7 @@ int numberOfTurnOnePlays(vector<Card> hand);
 
 //Keep percentage calculator
 bool containsCard(std::vector<Card> list, Card card);
-KeepPercentageResult getKeepPercentageDistribution(Deck deck, int numberOfReps, bool isOnPlay);
-std::vector<KeepPercentageResult> getKeepPercentageDistributionPlayDraw(Deck deck, int numberOfReps);
+SimulationResult simulate(Deck deck, int numberOfReps, bool isOnPlay);
+std::vector<SimulationResult> simulatePlayDraw(Deck deck, int numberOfReps);
 
 #endif
