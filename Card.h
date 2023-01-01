@@ -24,14 +24,14 @@ class Card{
 
         static Card Land(CardName name);
 
-        bool operator ==(const Card &card);
+        bool operator ==(const Card& card) const;
 
         void print();
 
         //Getters
-        CardName getName();
-        Type getType();
-        int getManaValue();
+        CardName getName() const;
+        Type getType() const;
+        int getManaValue() const;
 
         bool isCanopy() const {
             return (name == SUNBAKED_CANYON || name == FIERY_ISLET);

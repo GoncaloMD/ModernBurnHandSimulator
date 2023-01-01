@@ -11,8 +11,10 @@ class Deck {
 		vector<Card> deck;
 
 	public:
-		Deck() {};
+        Deck() {};
 
+        Deck(const vector<Card>& deck)
+            : deck(deck) {};
 		void addCard(Card card);
 		void addCards(Card card, int numberOfCopies);
 

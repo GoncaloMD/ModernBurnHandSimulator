@@ -22,29 +22,21 @@ void Deck::shuffle() {
 }
 
 Deck Deck::getShuffledCopy() {
-	Deck copy = Deck();
-	copy.deck = deck;
-	copy.shuffle();
-	copy.shuffle();
-	copy.shuffle();
-	copy.shuffle();
-	copy.shuffle();
-	copy.shuffle();
+	Deck copy = Deck(deck);
 	copy.shuffle();
 	return copy;
 }
 
 void Deck::draw(vector<Card> &hand) {
+	hand.push_back(deck[deck.size() - 1]);
 
-	hand.push_back(deck[0]);
-
-	deck.erase(deck.begin());
+	deck.pop_back();
 }
 
 void Deck::print() {
-	for (int i = 0; i < deck.size(); i++) {
-		cout << toStringFromCardName(deck[i].getName()) << endl;
-	}
+    for (const auto& card : deck) {
+        cout << toStringFromCardName(card.getName()) << endl;
+    }
 	cout << endl;
 }
 
