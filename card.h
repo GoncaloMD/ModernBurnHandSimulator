@@ -33,5 +33,9 @@ class Card{
         Type getType();
         int getManaValue();
 
+        bool isCanopy() const {
+            return (name == SUNBAKED_CANYON || name == FIERY_ISLET);
+        }
+
 };
 #endif

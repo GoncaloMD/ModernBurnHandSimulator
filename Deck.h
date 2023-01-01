@@ -19,7 +19,7 @@ class Deck {
 		void shuffle();
 		Deck getShuffledCopy();
 
-		Card draw();
+		void draw(vector<Card> &hand);
 
 		void print();
 

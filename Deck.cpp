@@ -34,10 +34,11 @@ Deck Deck::getShuffledCopy() {
 	return copy;
 }
 
-Card Deck::draw() {
-	Card card = deck[0];
+void Deck::draw(vector<Card> &hand) {
+
+	hand.push_back(deck[0]);
+
 	deck.erase(deck.begin());
-	return card;
 }
 
 void Deck::print() {
