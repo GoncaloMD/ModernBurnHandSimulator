@@ -4,10 +4,10 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
-#include <fstream>      // for std::ifstream
-#include <sstream>      // for std::istringstream
-#include <string>       // for std::string
-#include <unordered_map> // for std::unordered_map
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <unordered_map>
 
 #include "Card.h"
 #include "CardName.h"
@@ -19,9 +19,6 @@
 #include "BurnCards.h"
 
 using namespace std;
-
-int numberOfReps = 100000;
-bool onPlay = true;
 
 // Configuration options
 struct Config {
@@ -44,6 +41,7 @@ std::string trim(const std::string& s) {
 
 int main(){
 
+    //config.ini parsing TODO migrate to another file
     std::ifstream file("config.ini");
     if (!file.is_open()) {
         std::cerr << "Error: Failed to open config.ini for reading" << '\n';
@@ -104,7 +102,7 @@ int main(){
     //config.port = std::stoi(options["network.port"]);
 
     //Deck builder
-    //TODO do this somewhere else
+    //TODO migrate to another file, possibly make it read from file (would be cool if it could read mtgo .dek files too)
     Deck stockBoros = Deck();
     stockBoros.addCards(goblinGuide, 4);
     stockBoros.addCards(monasterySwiftspear, 4);
