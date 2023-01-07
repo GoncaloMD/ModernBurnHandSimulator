@@ -7,11 +7,5 @@ ManaCost::ManaCost(
 	, int R
 	, int G
 	, int generic
-){
-	this->W = W;
-	this->U = U;
-	this->B = B;
-	this->R = R;
-	this->G = G;
-	this->generic = generic;
-}
+): W(W), U(U), B(B), R(R), G(G), generic(generic)
+{}

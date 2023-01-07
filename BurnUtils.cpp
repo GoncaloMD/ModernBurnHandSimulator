@@ -6,78 +6,51 @@
 #include "BurnCards.h"
 
 //TODO: migrate this to Card class
-bool isTurnOnePlay(Card card) {
+bool isTurnOnePlay(const Card& card) {
 	if (card.getManaValue() == 1 || card.getName() == CardName::RIFT_BOLT) {
-		if (card.getName() == CardName::SHARD_VOLLEY) {
-			return false;
-		}
-		else {
-			return true;
-		}
+        return card.getName() != CardName::SHARD_VOLLEY; // This isn't very scalable if we add more cards like it
 	}
 	return false;
 }
 
 //TODO: maybe these vector<card> methods should be somewhere else. statics in card?
-bool containsTurnOnePlay(vector<Card> hand) {
-	for (int i = 0; i < hand.size(); i++) {
-		if (isTurnOnePlay(hand[i])) {
-			return true;
-		}
-	}
-	return false;
+bool containsTurnOnePlay(const vector<Card>& hand) {
+    return std::any_of(hand.begin(), hand.end(), [](const Card& card) {
+        return isTurnOnePlay(card);
+    });
 }
 
-int numberOfTurnOnePlays(vector<Card> hand) {
-	int numberOfTurnOnePlays = 0;
-	for (int i = 0; i < hand.size(); i++) {
-		if (isTurnOnePlay(hand[i])) {
-			numberOfTurnOnePlays++;
-		}
-	}
-	return numberOfTurnOnePlays;
+int numberOfTurnOnePlays(const vector<Card>& hand) {
+    return std::count_if(hand.begin(), hand.end(), [](const Card& card) {
+        return isTurnOnePlay(card);
+    });
 }
 
-bool containsCard(std::vector<Card> list, Card card) {
-    for (int i = 0; i < list.size(); i++) {
-        if (list[i] == card) return true;
-    }
-    return false;
+bool containsCard(const std::vector<Card>& list, const Card& card) {
+    return std::any_of(list.begin(), list.end(), [&card](const Card& listCard) {
+        return listCard == card;
+    });
 }
 
-int countLands(std::vector<Card> hand) {
-    int numberOfLands = 0;
-    for (int i = 0; i < hand.size(); i++) {
-        if (hand[i].getType() == LAND) {
-            numberOfLands++;
-        }
-    }
-    return numberOfLands;
+int countLands(const std::vector<Card>& hand) {
+    return std::count_if(hand.begin(), hand.end(), [](const Card& card) {
+        return card.getType() == LAND;
+    });
 }
 
-int countNonLands(std::vector<Card> hand) {
-    int numberOfNonLands = 0;
-    for (int i = 0; i < hand.size(); i++) {
-        if (hand[i].getType() != LAND) {
-            numberOfNonLands++;
-        }
-    }
-    return numberOfNonLands;
+int countNonLands(const std::vector<Card>& hand) {
+    return std::count_if(hand.begin(), hand.end(), [](const Card& card) {
+        return card.getType() != LAND;
+    });
 }
 
-int countCanopyLands(vector<Card> hand) {
-    int numberOfCanopies = 0;
-    for (int i = 0; i < hand.size(); i++) {
-        if (hand[i] == sunbakedCanyon || hand[i] == fieryIslet) {
-            numberOfCanopies++;
-        }
-    }
-
-    return numberOfCanopies;
+int countCanopyLands(const vector<Card>& hand) {
+    return std::count_if(hand.begin(), hand.end(), [](const Card& card) {
+        return (card == sunbakedCanyon || card == fieryIslet);
+    });
 }
 
-void crackCanopy(std::vector<Card> &hand) {
-
+void crackCanopy(std::vector<Card>& hand) {
     auto it = std::find_if(hand.begin(), hand.end(), [](const Card& card) {
         return card.isCanopy();
     });
@@ -87,16 +60,15 @@ void crackCanopy(std::vector<Card> &hand) {
     }
 }
 
-void printCards(std::vector<Card> hand) {
+void printCards(const std::vector<Card>& hand) {
     cout << "Hand: ";
-    for (int i = 0; i < hand.size(); i++) {
-        cout << toStringFromCardName(hand[i].getName()) << " ";
+    for (const Card& card : hand) {
+        cout << toStringFromCardName(card.getName()) << " ";
     }
     cout << endl;
 }
 
 SimulationResult simulate(Deck deck, int numberOfReps, bool isOnPlay) {
-
     vector<int> numberOfMulls{ 0, 0, 0, 0, 0, 0, 0, 0 };
     vector<int> numberOfKeeps{ 0, 0, 0, 0, 0, 0, 0, 0 };
     vector<int> numberOfFloods{ 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -113,8 +85,8 @@ SimulationResult simulate(Deck deck, int numberOfReps, bool isOnPlay) {
         int numberOfLands = 0;
 
         //calculate number of lands in opener
-        for (int i = 0; i < hand.size(); i++) {
-            if (hand[i].getType() == Type::LAND) {
+        for (const Card& card : hand) {
+            if (card.getType() == Type::LAND) {
                 numberOfLands++;
             }
         }
@@ -224,21 +196,15 @@ std::vector<SimulationResult> simulatePlayDraw(Deck deck, int numberOfReps) {
 }
 
 bool isFlooding(Deck &deck, vector<Card> &hand) {
-
-
-
     while (true) {
         if (countLands(hand) >= 5) {
-
             if (containsCard(hand, sunbakedCanyon) || containsCard(hand, fieryIslet)) {
-                
                 crackCanopy(hand);
 
                 deck.draw(hand);
                 deck.draw(hand);
                 continue;
             }
-
             return true;
         }
         else if (countNonLands(hand) >= 7) {

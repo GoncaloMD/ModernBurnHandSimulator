@@ -1,12 +1,9 @@
 #include "SimulationResult.h"
 
-SimulationResult::SimulationResult(vector<int> numberOfMulls, vector<int> numberOfKeeps, vector<int> numberOfFloods) {
-	this->numberOfMulls = numberOfMulls;
-	this->numberOfKeeps = numberOfKeeps;
-
-    this->numberOfReps = getTotalNumberOfMulls() + getTotalNumberOfKeeps();
-
-    this->numberOfFloods = numberOfFloods;
+SimulationResult::SimulationResult(vector<int> numberOfMulls, vector<int> numberOfKeeps, vector<int> numberOfFloods)
+    : numberOfMulls(numberOfMulls), numberOfKeeps(numberOfKeeps) ,numberOfFloods(numberOfFloods)
+{
+    numberOfReps = getTotalNumberOfMulls() + getTotalNumberOfKeeps();
 }
 
 void SimulationResult::print() {

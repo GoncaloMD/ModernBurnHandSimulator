@@ -41,6 +41,9 @@ std::string trim(const std::string& s) {
 
 int main(){
 
+    const std::chrono::time_point<std::chrono::steady_clock> start =
+            std::chrono::steady_clock::now();
+
     //config.ini parsing TODO migrate to another file
     std::ifstream file("config.ini");
     if (!file.is_open()) {
@@ -160,6 +163,12 @@ int main(){
     myBorosKeepPercentageResult[0].print();
     cout << "Draw:" << endl;
     myBorosKeepPercentageResult[1].print();
+
+    const auto end = std::chrono::steady_clock::now();
+    std::cout
+            << "Slow calculations took "
+            << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "micro seconds "
+            << (end - start) / 1s << "s.\n";  // using milliseconds and seconds accordingly
 
     return 0;
 }

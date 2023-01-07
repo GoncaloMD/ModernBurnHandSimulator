@@ -12,10 +12,7 @@ class Battlefield {
 		vector<Card> battlefield;
 
 	public:
-		Battlefield() { ; }
-
-		void play(Card card);
-
+		void play(const Card& card);
 };
 
 #endif

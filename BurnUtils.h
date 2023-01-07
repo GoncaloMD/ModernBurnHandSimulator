@@ -8,15 +8,15 @@
 #include "SimulationResult.h"
 
 //Card utils
-bool isTurnOnePlay(Card card);
-bool containsTurnOnePlay(vector<Card> hand);
-int numberOfTurnOnePlays(vector<Card> hand);
-bool containsCard(std::vector<Card> list, Card card);
-int countLands(std::vector<Card> hand);
-int countNonLands(std::vector<Card> hand);
-int countCanopyLands(std::vector<Card> hand);
-void crackCanopy(std::vector<Card> &hand);
-void printCards(std::vector<Card> hand);
+bool isTurnOnePlay(const Card& card);
+bool containsTurnOnePlay(const std::vector<Card>& hand);
+int numberOfTurnOnePlays(const std::vector<Card>& hand);
+bool containsCard(const std::vector<Card>& list, const Card& card);
+int countLands(const std::vector<Card>& hand);
+int countNonLands(const std::vector<Card>& hand);
+int countCanopyLands(const std::vector<Card>& hand);
+void crackCanopy(const std::vector<Card>& hand);
+void printCards(const std::vector<Card>& hand);
 
 //Keep percentage calculator
 SimulationResult simulate(Deck deck, int numberOfReps, bool isOnPlay);
